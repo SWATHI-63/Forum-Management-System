@@ -89,11 +89,11 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/categories" className="nav-link" onClick={toggleMobileMenu}>
               Categories
             </Link>
-          </li>
+          </li> */}
 
           {user ? (
             <>

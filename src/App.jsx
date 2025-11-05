@@ -5,8 +5,7 @@ import { NotificationProvider } from './components/contexts/NotificationContext.
 import { ThemeProvider } from './components/contexts/ThemeContext.jsx';
 import PrivateRoute from './components/common/PrivateRoute.jsx';
 import AdminRoute from './components/common/AdminRoute.jsx';
-import Navbar from './components/layout/Navbar.jsx';
-import Footer from './components/layout/Footer.jsx';
+import Navbar from './components/layout/Navbar.jsx'; 
 
 // Auth Components
 import Login from './components/authentication/Login.jsx';
@@ -21,7 +20,7 @@ import UserDashboard from './components/user/UserDashboard.jsx';
 // Forum Components
 import Categories from './components/forum/Categories.jsx';
 import ThreadList from './components/forum/ThreadList.jsx';
-// import PostDetail from './components/forum/PostDetail.jsx';
+import PostDetail from './components/forum/PostDetail.jsx';
 import CreatePost from './components/forum/CreatePost.jsx';
 // import SearchResults from './components/forum/SearchResults.jsx';
 
@@ -48,11 +47,11 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/category/:categoryId/threads" element={<ThreadList />} />
-                {/* <Route path="/post/:postId" element={<PostDetail />} /> */}
-                {/* <Route path="/search" element={<SearchResults />} /> */}
-                <Route path="/user/:userId" element={<UserProfile />} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/category/:categoryId/threads" element={<ThreadList />} />
+                  <Route path="/post/:postId" element={<PostDetail />} />
+                  {/* <Route path="/search" element={<SearchResults />} /> */}
+                  <Route path="/user/:userId" element={<UserProfile />} />
 
                 {/* Protected User Routes */}
                 <Route
@@ -126,7 +125,6 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
-            <Footer />
           </div>
         </NotificationProvider>
       </AuthProvider>

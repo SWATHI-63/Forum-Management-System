@@ -74,13 +74,13 @@ const AdminDashboard = () => {
           <line x1="100" y1="95" x2="120" y2="95" stroke="white" strokeWidth="4" strokeLinecap="round" />
           <line x1="100" y1="110" x2="120" y2="110" stroke="white" strokeWidth="4" strokeLinecap="round" />
         </svg>
-        <h2 className="dashboard-logo-text">Forum</h2>
+        <h2 className="dashboard-logo-text">CHATTRIX</h2>
       </div>
       <div className="admin-header">
         <h1>
           <FaUserShield /> Admin Dashboard
         </h1>
-        <p>Manage your forum and monitor activity</p>
+        <p>Manage your CHATTRIX community and monitor activity</p>
       </div>
 
       <div className="stats-grid">

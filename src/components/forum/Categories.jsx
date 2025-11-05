@@ -43,7 +43,7 @@ const Categories = () => {
       <div className="categories-header">
         <div className="header-content">
           <h1>
-            <FaFolder /> Forum Categories
+            <FaFolder /> CHATTRIX Categories
           </h1>
           <p>Browse and explore all discussion categories</p>
         </div>

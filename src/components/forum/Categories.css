@@ -42,13 +42,14 @@
 .btn-create-post {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
+  gap: 8px;
+  padding: 10px 18px;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.875rem;
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
@@ -256,7 +257,8 @@
 
   .categories-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 15px;
   }
 
   .header-content h1 {
@@ -266,6 +268,8 @@
   .btn-create-post {
     width: 100%;
     justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.938rem;
   }
 
   .categories-grid {
@@ -280,14 +284,32 @@
   .category-icon {
     margin: 0 auto;
   }
+
+  .search-input {
+    font-size: 0.938rem;
+    padding: 12px 18px;
+  }
 }
 
 @media (max-width: 480px) {
+  .categories-container {
+    padding: 15px 8px;
+  }
+
   .header-content h1 {
     font-size: 1.5rem;
   }
 
+  .header-content p {
+    font-size: 0.938rem;
+  }
+
   .category-card {
     padding: 20px;
+  }
+
+  .btn-create-post {
+    padding: 10px 18px;
+    font-size: 0.875rem;
   }
 }

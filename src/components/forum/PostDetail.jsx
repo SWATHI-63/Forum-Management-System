@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { getPostById, addComment, likePost, unlikePost, deletePost } from '../../services/forumService';
-import { FaHeart, FaRegHeart, FaComment, FaShare, FaEdit, FaTrash, FaArrowLeft, FaClock, FaUser } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaComment, FaShare, FaEdit, FaTrash, FaArrowLeft, FaClock, FaUser, FaReply } from 'react-icons/fa';
 import './PostDetail.css';
 
 const PostDetail = () => {
@@ -12,6 +12,8 @@ const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyTexts, setReplyTexts] = useState({});
   const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -58,6 +60,8 @@ const PostDetail = () => {
         user_name: user.name,
         content: newComment,
         created_at: new Date().toISOString(),
+        parent_id: null,
+        replies: []
       };
 
       await addComment(post.post_id, comment);
@@ -69,6 +73,107 @@ const PostDetail = () => {
     } catch (error) {
       console.error('Error adding comment:', error);
       alert('Failed to add comment');
+    }
+  };
+
+  const handleAddReply = async (parentCommentId) => {
+    if (!user) {
+      alert('Please login to reply');
+      return;
+    }
+
+    const replyText = replyTexts[parentCommentId] || '';
+    
+    if (!replyText.trim()) {
+      return;
+    }
+
+    try {
+      const reply = {
+        comment_id: Date.now(),
+        post_id: post.post_id,
+        user_id: user.user_id,
+        user_name: user.name,
+        content: replyText,
+        created_at: new Date().toISOString(),
+        parent_id: parentCommentId,
+      };
+
+      await addComment(post.post_id, reply);
+      
+      // Update comments with the new reply
+      const updatedComments = comments.map(comment => {
+        if (comment.comment_id === parentCommentId) {
+          return {
+            ...comment,
+            replies: [...(comment.replies || []), reply]
+          };
+        }
+        return comment;
+      });
+      
+      setComments(updatedComments);
+      
+      // Clear the reply text for this specific comment
+      setReplyTexts(prev => ({
+        ...prev,
+        [parentCommentId]: ''
+      }));
+      setReplyingTo(null);
+      
+      // Update post comment count
+      setPost({ ...post, comment_count: (post.comment_count || 0) + 1 });
+    } catch (error) {
+      console.error('Error adding reply:', error);
+      alert('Failed to add reply');
+    }
+  };
+
+  const handleDeleteComment = async (commentId, isReply = false, parentId = null) => {
+    if (!window.confirm('Are you sure you want to delete this comment?')) {
+      return;
+    }
+
+    try {
+      let updatedComments;
+      
+      if (isReply && parentId) {
+        // Delete a reply
+        updatedComments = comments.map(comment => {
+          if (comment.comment_id === parentId) {
+            return {
+              ...comment,
+              replies: comment.replies.filter(reply => reply.comment_id !== commentId)
+            };
+          }
+          return comment;
+        });
+      } else {
+        // Delete a main comment (and all its replies)
+        updatedComments = comments.filter(comment => comment.comment_id !== commentId);
+      }
+      
+      setComments(updatedComments);
+      
+      // Update the post in the service
+      const updatedPost = {
+        ...post,
+        comments: updatedComments,
+        comment_count: Math.max((post.comment_count || 0) - 1, 0)
+      };
+      
+      // Save to localStorage
+      const posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+      const postIndex = posts.findIndex(p => p.post_id === post.post_id);
+      if (postIndex !== -1) {
+        posts[postIndex] = updatedPost;
+        localStorage.setItem('forumPosts', JSON.stringify(posts));
+      }
+      
+      setPost(updatedPost);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      alert('Failed to delete comment');
     }
   };
 
@@ -152,6 +257,70 @@ const PostDetail = () => {
       month: 'short', 
       day: 'numeric' 
     });
+  };
+
+  // Component to render a single comment with its replies
+  const CommentItem = ({ comment, depth = 0 }) => {
+    const isReplying = replyingTo === comment.comment_id;
+    
+    return (
+      <div className={`comment-item ${depth > 0 ? 'reply-item' : ''}`} style={{ marginLeft: `${depth * 30}px` }}>
+        <div className="comment-avatar">
+          <FaUser />
+        </div>
+        <div className="comment-content">
+          <div className="comment-header">
+            <h4>{comment.user_name || 'Anonymous'}</h4>
+            <span className="comment-time">{formatDate(comment.created_at)}</span>
+          </div>
+          <p>{comment.content}</p>
+          
+          {user && (
+            <button 
+              className="reply-button"
+              onClick={() => setReplyingTo(isReplying ? null : comment.comment_id)}
+            >
+              <FaReply /> {isReplying ? 'Cancel' : 'Reply'}
+            </button>
+          )}
+
+          {isReplying && (
+            <div className="reply-form">
+              <textarea
+                value={replyTexts[comment.comment_id] || ''}
+                onChange={(e) => setReplyTexts(prev => ({
+                  ...prev,
+                  [comment.comment_id]: e.target.value
+                }))}
+                placeholder={`Reply to ${comment.user_name}...`}
+                rows="2"
+              />
+              <div className="reply-actions">
+                <button 
+                  onClick={() => handleAddReply(comment.comment_id)}
+                  className="btn btn-primary btn-sm"
+                  disabled={!replyTexts[comment.comment_id]?.trim()}
+                >
+                  Post Reply
+                </button>
+                <button 
+                  onClick={() => {
+                    setReplyingTo(null);
+                    setReplyTexts(prev => ({
+                      ...prev,
+                      [comment.comment_id]: ''
+                    }));
+                  }}
+                  className="btn btn-secondary btn-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
   };
 
   if (loading) {
@@ -305,17 +474,17 @@ const PostDetail = () => {
             <p className="no-comments">No comments yet. Be the first to comment!</p>
           ) : (
             comments.map((comment) => (
-              <div key={comment.comment_id} className="comment-item">
-                <div className="comment-avatar">
-                  <FaUser />
-                </div>
-                <div className="comment-content">
-                  <div className="comment-header">
-                    <h4>{comment.user_name || 'Anonymous'}</h4>
-                    <span className="comment-time">{formatDate(comment.created_at)}</span>
+              <div key={comment.comment_id} className="comment-thread">
+                <CommentItem comment={comment} depth={0} />
+                
+                {/* Render replies */}
+                {comment.replies && comment.replies.length > 0 && (
+                  <div className="replies-container">
+                    {comment.replies.map((reply) => (
+                      <CommentItem key={reply.comment_id} comment={reply} depth={1} />
+                    ))}
                   </div>
-                  <p>{comment.content}</p>
-                </div>
+                )}
               </div>
             ))
           )}

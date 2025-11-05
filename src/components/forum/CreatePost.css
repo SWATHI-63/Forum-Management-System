@@ -7,12 +7,21 @@
   gap: 30px;
 }
 
+/* Gradient background for the create post area */
+.create-post-container {
+  background: linear-gradient(135deg, #667eea 0%, #8b5cf6 45%, #f472b6 100%);
+  border-radius: 16px;
+  padding: 36px;
+}
+
 .create-post-card {
-  background: white;
+  /* translucent card so the gradient shows through */
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 20px rgba(13, 16, 38, 0.12);
+  padding: 36px;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  backdrop-filter: blur(6px);
 }
 
 [data-theme='dark'] .create-post-card {
@@ -23,7 +32,7 @@
 .create-post-header {
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid rgba(226, 232, 240, 0.6);
 }
 
 [data-theme='dark'] .create-post-header {
@@ -34,6 +43,20 @@
   font-size: 2rem;
   color: #1e293b;
   margin-bottom: 10px;
+}
+
+/* Gradient heading accent */
+.create-post-header {
+  padding: 20px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+.create-post-header h1 {
+  background: linear-gradient(90deg, #4f46e5, #8b5cf6, #fb7185);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 [data-theme='dark'] .create-post-header h1 {
@@ -412,6 +435,7 @@
 @media (max-width: 992px) {
   .create-post-container {
     grid-template-columns: 1fr;
+    padding: 30px 20px;
   }
 
   .posting-guidelines {
@@ -422,14 +446,23 @@
 @media (max-width: 768px) {
   .create-post-container {
     padding: 20px 10px;
+    border-radius: 12px;
   }
 
   .create-post-card {
     padding: 20px;
   }
 
+  .create-post-header {
+    padding: 15px;
+  }
+
   .create-post-header h1 {
     font-size: 1.5rem;
+  }
+
+  .create-post-header p {
+    font-size: 0.938rem;
   }
 
   .upload-buttons {
@@ -439,14 +472,51 @@
   .upload-btn {
     width: 100%;
     justify-content: center;
+    padding: 12px 18px;
   }
 
   .form-actions {
     flex-direction: column;
+    gap: 10px;
   }
 
   .btn {
     width: 100%;
     justify-content: center;
+    padding: 12px 20px;
+  }
+
+  .preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .create-post-container {
+    padding: 15px 8px;
+  }
+
+  .create-post-card {
+    padding: 15px;
+  }
+
+  .create-post-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .form-group label {
+    font-size: 0.875rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.938rem;
+    padding: 10px 12px;
+  }
+
+  .preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
   }
 }
