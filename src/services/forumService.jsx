@@ -14,8 +14,8 @@ let mockPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     post_id: 1, 
     category_id: 1, 
     category_name: 'General Discussion',
-    title: 'Welcome to the Forum!', 
-    content: 'This is a sample post about forum guidelines and best practices...', 
+    title: 'Welcome to CHATTRIX!', 
+    content: 'This is a sample post about CHATTRIX community guidelines and best practices...', 
     author_name: 'Admin', 
     user_id: 1,
     created_at: new Date().toISOString(), 
@@ -209,7 +209,20 @@ export const addComment = async (postId, commentData) => {
       const post = mockPosts.find(p => p.post_id === parseInt(postId));
       if (post) {
         if (!post.comments) post.comments = [];
-        post.comments.push(commentData);
+        
+        // If it's a reply (has parent_id), add it to the parent comment's replies
+        if (commentData.parent_id) {
+          const parentComment = post.comments.find(c => c.comment_id === commentData.parent_id);
+          if (parentComment) {
+            if (!parentComment.replies) parentComment.replies = [];
+            parentComment.replies.push(commentData);
+          }
+        } else {
+          // It's a top-level comment
+          if (!commentData.replies) commentData.replies = [];
+          post.comments.push(commentData);
+        }
+        
         post.comment_count = (post.comment_count || 0) + 1;
         savePosts();
       }

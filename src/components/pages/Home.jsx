@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getRecentPosts, getPopularPosts, getCategories } from '../services/forumService.jsx';
-import { FaFire, FaClock, FaComments } from 'react-icons/fa';
+import { FaFire, FaClock, FaComments, FaUsers, FaLightbulb, FaShieldAlt, FaRocket, FaHeart } from 'react-icons/fa';
 import './Home.css';
 
 const Home = () => {
@@ -44,7 +44,7 @@ const Home = () => {
     <div className="home-container">
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Welcome to Our Community Forum</h1>
+          <h1>Welcome to CHATTRIX Community</h1>
           <p>Join discussions, share ideas, and connect with like-minded individuals</p>
           <div className="hero-buttons">
             <Link to="/register" className="btn btn-primary">
@@ -72,6 +72,40 @@ const Home = () => {
           <FaClock className="stat-icon" />
           <h3>24/7</h3>
           <p>Community Support</p>
+        </div>
+      </section>
+
+      <section className="features-section">
+        <h2 className="section-title">Why Join CHATTRIX?</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaUsers />
+            </div>
+            <h3>Vibrant Community</h3>
+            <p>Connect with thousands of active members sharing knowledge and experiences in real-time.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaLightbulb />
+            </div>
+            <h3>Expert Insights</h3>
+            <p>Learn from industry experts and experienced professionals across various topics and fields.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaShieldAlt />
+            </div>
+            <h3>Safe & Secure</h3>
+            <p>Your privacy matters. We maintain a respectful, moderated environment for meaningful discussions.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">
+              <FaRocket />
+            </div>
+            <h3>Fast & Modern</h3>
+            <p>Enjoy a seamless, lightning-fast experience with our cutting-edge platform technology.</p>
+          </div>
         </div>
       </section>
 
@@ -137,6 +171,84 @@ const Home = () => {
           )}
         </section>
       </div>
+
+      <section className="how-it-works">
+        <h2 className="section-title">How CHATTRIX Works</h2>
+        <div className="steps-grid">
+          <div className="step-card">
+            <div className="step-number">1</div>
+            <h3>Create Your Account</h3>
+            <p>Sign up for free in seconds and customize your profile to reflect your interests.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">2</div>
+            <h3>Explore Topics</h3>
+            <p>Browse through diverse categories and discover discussions that match your interests.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">3</div>
+            <h3>Join Conversations</h3>
+            <p>Share your thoughts, ask questions, and engage with the community through comments and posts.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">4</div>
+            <h3>Build Connections</h3>
+            <p>Follow interesting members, earn recognition, and become part of something amazing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="testimonials-section">
+        <h2 className="section-title">What Our Members Say</h2>
+        <div className="testimonials-grid">
+          <div className="testimonial-card">
+            <div className="quote-icon">"</div>
+            <p className="testimonial-text">
+              CHATTRIX has become my go-to platform for learning and sharing knowledge. The community is incredibly supportive and knowledgeable!
+            </p>
+            <div className="testimonial-author">
+              <strong>Sarah Johnson</strong>
+              <span>Tech Enthusiast</span>
+            </div>
+          </div>
+          <div className="testimonial-card">
+            <div className="quote-icon">"</div>
+            <p className="testimonial-text">
+              I've found amazing mentors and collaborators here. The quality of discussions is top-notch and truly valuable.
+            </p>
+            <div className="testimonial-author">
+              <strong>Michael Chen</strong>
+              <span>Software Developer</span>
+            </div>
+          </div>
+          <div className="testimonial-card">
+            <div className="quote-icon">"</div>
+            <p className="testimonial-text">
+              Whether you're a beginner or expert, CHATTRIX welcomes everyone. I've learned so much from this incredible community!
+            </p>
+            <div className="testimonial-author">
+              <strong>Emily Rodriguez</strong>
+              <span>Content Creator</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="cta-section">
+        <div className="cta-content">
+          <FaHeart className="cta-icon" />
+          <h2>Ready to Join the Conversation?</h2>
+          <p>Become part of our thriving community today and start connecting with like-minded individuals.</p>
+          <div className="cta-buttons">
+            <Link to="/register" className="btn btn-primary btn-large">
+              Get Started Free
+            </Link>
+            <Link to="/categories" className="btn btn-secondary btn-large">
+              Explore Topics
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { getUserPosts, getUserNotifications } from '../services/userService.jsx';
-import { FaPlus, FaBell, FaComments, FaHeart } from 'react-icons/fa';
+import { FaPlus, FaBell, FaComments, FaHeart, FaTrophy, FaChartLine, FaClock, FaEye, FaThumbsUp } from 'react-icons/fa';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -11,6 +11,14 @@ const UserDashboard = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('posts');
+
+  // Calculate stats
+  const totalViews = posts.reduce((sum, post) => sum + (post.views || 0), 0);
+  const totalLikes = posts.reduce((sum, post) => sum + (post.like_count || 0), 0);
+  const totalComments = posts.reduce((sum, post) => sum + (post.comment_count || 0), 0);
+  const mostPopularPost = posts.length > 0 ? posts.reduce((prev, current) => 
+    ((current.like_count || 0) > (prev.like_count || 0)) ? current : prev
+  ) : null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +50,91 @@ const UserDashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <div className="forum-animated-background">
+        {/* Floating Particles */}
+        <div className="particle particle-1"></div>
+        <div className="particle particle-2"></div>
+        <div className="particle particle-3"></div>
+        <div className="particle particle-4"></div>
+        <div className="particle particle-5"></div>
+        <div className="particle particle-6"></div>
+        <div className="particle particle-7"></div>
+        <div className="particle particle-8"></div>
+
+        {/* Animated Chat Bubbles with different sizes */}
+        <div className="chat-bubble chat-bubble-1">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div className="chat-bubble chat-bubble-2">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div className="chat-bubble chat-bubble-3">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div className="chat-bubble chat-bubble-4">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div className="chat-bubble chat-bubble-5">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div className="chat-bubble chat-bubble-6">
+          <div className="bubble-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        {/* Floating Icons with more variety */}
+        <div className="floating-icon icon-comment">💬</div>
+        <div className="floating-icon icon-heart">❤️</div>
+        <div className="floating-icon icon-user">👤</div>
+        <div className="floating-icon icon-message">💭</div>
+        <div className="floating-icon icon-star">⭐</div>
+        <div className="floating-icon icon-fire">🔥</div>
+        <div className="floating-icon icon-trophy">🏆</div>
+        <div className="floating-icon icon-rocket">🚀</div>
+        
+        {/* Animated Wave Lines */}
+        <svg className="wave-background" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path className="wave-path wave-1" d="M0,160L48,165.3C96,171,192,181,288,165.3C384,149,480,107,576,101.3C672,96,768,128,864,133.3C960,139,1056,117,1152,112C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" fill="rgba(139, 92, 246, 0.05)"></path>
+          <path className="wave-path wave-2" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,208C960,192,1056,160,1152,154.7C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" fill="rgba(236, 72, 153, 0.05)"></path>
+        </svg>
+        
+        {/* Dynamic Connection Lines */}
+        <svg className="connection-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="10" y1="20" x2="90" y2="40" className="connection-line line-1" />
+          <line x1="20" y1="60" x2="80" y2="30" className="connection-line line-2" />
+          <line x1="30" y1="80" x2="70" y2="20" className="connection-line line-3" />
+          <line x1="50" y1="10" x2="60" y2="90" className="connection-line line-4" />
+          <line x1="15" y1="45" x2="85" y2="70" className="connection-line line-5" />
+        </svg>
+
+        {/* Glowing Orbs */}
+        <div className="glow-orb orb-1"></div>
+        <div className="glow-orb orb-2"></div>
+        <div className="glow-orb orb-3"></div>
+      </div>
       <div className="dashboard-logo-section">
         <svg className="dashboard-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -67,7 +160,7 @@ const UserDashboard = () => {
           <line x1="100" y1="95" x2="120" y2="95" stroke="white" strokeWidth="4" strokeLinecap="round" />
           <line x1="100" y1="110" x2="120" y2="110" stroke="white" strokeWidth="4" strokeLinecap="round" />
         </svg>
-        <h2 className="dashboard-logo-text">Forum</h2>
+        <h2 className="dashboard-logo-text">CHATTRIX</h2>
       </div>
       <div className="dashboard-header">
         <h1>Welcome back, {user.name}!</h1>
@@ -87,8 +180,15 @@ const UserDashboard = () => {
         <div className="stat-card">
           <FaHeart className="stat-icon" />
           <div className="stat-info">
-            <h3>{user.total_likes || 0}</h3>
+            <h3>{totalLikes}</h3>
             <p>Total Likes</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <FaEye className="stat-icon" />
+          <div className="stat-info">
+            <h3>{totalViews}</h3>
+            <p>Total Views</p>
           </div>
         </div>
         <div className="stat-card">
@@ -98,6 +198,69 @@ const UserDashboard = () => {
             <p>Unread Notifications</p>
           </div>
         </div>
+      </div>
+
+      {/* Quick Stats Section */}
+      <div className="quick-stats-section">
+        <div className="quick-stat-card">
+          <div className="quick-stat-header">
+            <FaChartLine className="quick-stat-icon" />
+            <h3>Engagement Overview</h3>
+          </div>
+          <div className="quick-stat-grid">
+            <div className="mini-stat">
+              <FaThumbsUp />
+              <div>
+                <span className="mini-stat-value">{totalLikes}</span>
+                <span className="mini-stat-label">Likes Received</span>
+              </div>
+            </div>
+            <div className="mini-stat">
+              <FaComments />
+              <div>
+                <span className="mini-stat-value">{totalComments}</span>
+                <span className="mini-stat-label">Total Comments</span>
+              </div>
+            </div>
+            <div className="mini-stat">
+              <FaEye />
+              <div>
+                <span className="mini-stat-value">{totalViews}</span>
+                <span className="mini-stat-label">Post Views</span>
+              </div>
+            </div>
+            <div className="mini-stat">
+              <FaClock />
+              <div>
+                <span className="mini-stat-value">{posts.filter(p => {
+                  const postDate = new Date(p.created_at || p.timestamp);
+                  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                  return postDate > weekAgo;
+                }).length}</span>
+                <span className="mini-stat-label">Posts This Week</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {mostPopularPost && (
+          <div className="quick-stat-card popular-post-card">
+            <div className="quick-stat-header">
+              <FaTrophy className="quick-stat-icon trophy" />
+              <h3>Most Popular Post</h3>
+            </div>
+            <div className="popular-post-content">
+              <Link to={`/post/${mostPopularPost.post_id}`}>
+                <h4>{mostPopularPost.title}</h4>
+              </Link>
+              <div className="popular-post-stats">
+                <span><FaHeart /> {mostPopularPost.like_count || 0} likes</span>
+                <span><FaComments /> {mostPopularPost.comment_count || 0} comments</span>
+                <span><FaEye /> {mostPopularPost.views || 0} views</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="dashboard-content">

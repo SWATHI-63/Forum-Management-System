@@ -112,18 +112,18 @@ const ThreadList = () => {
                     <FaUser /> {thread.author_name || 'Anonymous'}
                   </span>
                   <span className="thread-time">
-                    <FaClock /> {formatDate(thread.timestamp)}
+                    <FaClock /> {formatDate(thread.created_at || thread.timestamp)}
                   </span>
                 </div>
               </div>
               <div className="thread-stats">
                 <div className="stat-item">
                   <FaComments />
-                  <span>{thread.comments_count || 0}</span>
+                  <span>{thread.comment_count || thread.comments_count || 0}</span>
                 </div>
                 <div className="stat-item">
                   <FaHeart />
-                  <span>{thread.likes || 0}</span>
+                  <span>{thread.like_count || thread.likes || 0}</span>
                 </div>
               </div>
             </Link>

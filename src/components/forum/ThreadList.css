@@ -35,13 +35,14 @@
 .btn-create-thread {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
+  gap: 8px;
+  padding: 10px 18px;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.875rem;
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
@@ -314,6 +315,7 @@
 
   .thread-list-header {
     flex-direction: column;
+    gap: 15px;
   }
 
   .category-info h1 {
@@ -323,6 +325,8 @@
   .btn-create-thread {
     width: 100%;
     justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.938rem;
   }
 
   .thread-controls {
@@ -347,5 +351,32 @@
   .thread-stats {
     flex-direction: row;
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .thread-list-container {
+    padding: 15px 8px;
+  }
+
+  .category-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .category-info p {
+    font-size: 0.938rem;
+  }
+
+  .btn-create-thread {
+    padding: 10px 18px;
+    font-size: 0.875rem;
+  }
+
+  .thread-item {
+    padding: 15px;
+  }
+
+  .thread-title {
+    font-size: 1rem;
   }
 }
